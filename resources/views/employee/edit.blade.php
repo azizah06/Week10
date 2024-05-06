@@ -40,7 +40,7 @@
     <div class="container-sm mt-5">
         <form action="{{ route('employees.update', ['employee' => $employee->id]) }}" method="POST">
             @csrf
-            @method('put')
+            @method('PUT')
             <div class="row justify-content-center">
                 <div class="p-5 bg-light rounded-3 col-xl-6">
                     <div class="mb-3 text-center">

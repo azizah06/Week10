@@ -13,13 +13,47 @@
                 <li class="nav-item col-2 col-md-auto"><a href="{{ route('home') }}"
                         class="nav-link @if ($currentRouteName == 'home') active @endif">Home</a></li>
                 <li class="nav-item col-2 col-md-auto"><a href="{{ route('employees.index') }}"
-                        class="nav-link
-@if ($currentRouteName == 'employees.index') active @endif">Employee</a></li>
+                        class="nav-link @if ($currentRouteName == 'employees.index') active @endif">Employee</a></li>
             </ul>
             <hr class="d-md-none text-white-50">
-            <a href="{{ route('profile') }}" class="btn btn-outline-light
-my-2 ms-md-auto"><i
-                    class="bi-person-circle me-1"></i> My Profile</a>
+
+            <!-- Dropdown My Profile -->
+            {{-- <div class="dropdown ms-auto">
+                <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi-person-circle me-1"></i> My Profile</a>
+
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                    <!-- Tautan menu dropdown -->
+                    <li><a class="dropdown-item" href="{{ route('profile') }}">View Profile</a></li>
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="dropdown-item"><i class="bi-power me-1"></i> Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div> --}}
+
+            <div class="dropdown ms-auto">
+                @auth
+                <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi-person-circle me-1"></i> {{ Auth::user()->name }}
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="{{ route('profile') }}"><i class="bi-person-circle me-1"></i> My Profile</a></li>
+                    <li>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="dropdown-item"><i class="bi-power me-1"></i> Logout</button>
+                        </form>
+                    </li>
+                </ul>
+                @else
+                <a href="{{ route('login') }}" class="btn btn-outline-light">Login</a>
+                @endauth
+            </div>
+
         </div>
     </div>
 </nav>

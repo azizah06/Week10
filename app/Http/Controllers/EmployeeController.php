@@ -103,7 +103,6 @@ class EmployeeController extends Controller
     {
         $messages = [
             'required' => ':Attribute harus diisi.',
-            'email' => 'Isi :attribute dengan format yang benar',
             'numeric' => 'Isi :attribute dengan angka'
         ];
         $validator = Validator::make($request->all(), [
