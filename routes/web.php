@@ -28,8 +28,69 @@ Route::get('profile', ProfileController::class)->name('profile');
 
 Route::resource('employees', EmployeeController::class);
 
-
 Auth::routes();
+
+Route::get('/local-disk', function() {
+    Storage::disk('local')->put('local-example.txt', 'This is local example content');
+    return asset('storage/local-example.txt');
+});
+
+Route::get('/retrieve-local-file', function() {
+    if (Storage::disk('local')->exists('local-example.txt')) {
+        $contents = Storage::disk('local')->get('local-example.txt');
+    } else {
+        $contents = 'File does not exist';
+    }
+
+    return $contents;
+});
+
+Route::get('/download-local-file', function() {
+    return Storage::download('local-example.txt', 'local file');
+});
+
+
+
+Route::get('/public-disk', function() {
+    Storage::disk('public')->put('public-example.txt', 'This is public example content');
+    return asset('storage/public-example.txt');
+});
+
+Route::get('/retrieve-public-file', function() {
+    if (Storage::disk('public')->exists('public-example.txt')) {
+        $contents = Storage::disk('public')->get('public-example.txt');
+    } else {
+        $contents = 'File does not exist';
+    }
+
+    return $contents;
+});
+
+Route::get('/download-public-file', function() {
+    return Storage::download('public/public-example.txt', 'public file');
+});
+
+
+Route::get('/file-url', function() {
+    // Just prepend "/storage" to the given path and return a relative URL
+    $url = Storage::url('local-example.txt');
+    return $url;
+});
+
+Route::get('/file-size', function() {
+    $size = Storage::size('local-example.txt');
+    return $size;
+});
+
+Route::get('/file-path', function() {
+    $path = Storage::path('local-example.txt');
+    return $path;
+});
+
+Route::get('getEmployees', [EmployeeController::class, 'getData'])->name('employees.getData');
+
+
+
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::post('/login', [LoginController::class,  'authenticate']);
